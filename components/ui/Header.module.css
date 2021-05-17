@@ -4,7 +4,7 @@
   align-items: center;
   width: 100%;
   max-width: 1200px;
-  padding: 0 2rem;
+  padding: 0 16px;
   height: 150px;
 }
 
@@ -19,7 +19,7 @@
 }
 
 .button {
-  margin-left: 1rem;
+  margin-left: 16px;
 }
 
 @media (min-width: 1200px) {
