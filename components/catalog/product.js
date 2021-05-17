@@ -20,7 +20,7 @@ function Colors({ colors }) {
   return (
     <div className={styles.colorsDiv}>
       {colors.map((color) => (
-        <button>
+        <button key={color.color}>
           <div
             className={styles.color}
             style={{ backgroundColor: color.color }}

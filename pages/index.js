@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import Head from "next/head";
 import Product from "../components/catalog/product";
 import styles from "../styles/Home.module.css";
