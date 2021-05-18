@@ -1,4 +1,4 @@
-import { firestore } from "../../util/firebase";
+import { firestore } from "../../../util/firebase";
 
 export default async (req, res) => {
   const DOC = firestore().doc("auth/tokens");
