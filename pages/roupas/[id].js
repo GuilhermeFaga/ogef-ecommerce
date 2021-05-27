@@ -8,7 +8,7 @@ export default function Product({ product }) {
 
 export async function getStaticProps({ params }) {
   const products_res = await fetch(
-    `https://ogef.com.br/web_api/products?id=${params.id}`
+    `${process.env.api_url}products?id=${params.id}`
   );
   const products_json = await products_res.json();
 
@@ -21,7 +21,7 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-  const products_res = await fetch("https://ogef.com.br/web_api/products");
+  const products_res = await fetch(`${process.env.api_url}products`);
 
   const products_json = await products_res.json();
 

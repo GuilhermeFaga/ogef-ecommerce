@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import Head from "next/head";
 import Product from "../components/catalog/product";
 import styles from "../styles/Home.module.css";
+import { firestore } from "../util/firebase";
+import Feature from "../components/ui/feature";
 
-export default function Home({ products }) {
+export default function Home({ products, features }) {
+  console.log(features);
   return (
     <>
       <Head>
@@ -11,11 +14,17 @@ export default function Home({ products }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-        <div className={styles.grid}>
-          {products.map((product) => (
-            <Product key={product.Product.id} product={product.Product} />
-          ))}
+      <main className={styles.main}>
+        {features.map((f) => (
+          <Feature key={f.link} feature={f} products={products} />
+        ))}
+        <div className={styles.products}>
+          <h3>TODOS OS PRODUTOS</h3>
+          <div className={styles.grid}>
+            {products.map((product) => (
+              <Product key={product.Product.id} product={product.Product} />
+            ))}
+          </div>
         </div>
       </main>
     </>
@@ -23,8 +32,21 @@ export default function Home({ products }) {
 }
 
 export async function getStaticProps() {
+  const products_json = await getProducts();
+  const features = await getFeatures();
+
+  return {
+    props: {
+      features: features,
+      products: products_json.Products,
+    },
+    revalidate: 60,
+  };
+}
+
+async function getProducts() {
   const products_res = await fetch(
-    "https://ogef.com.br/web_api/products?available=1"
+    `${process.env.api_url}products?available=1`
   );
   const products_json = await products_res.json();
 
@@ -36,7 +58,7 @@ export async function getStaticProps() {
     var colors = [];
     for (const variant of product_variants) {
       const variant_res = await fetch(
-        `https://www.ogef.com.br/web_api/products/variants?type_2=Cor&id=${variant.id}`
+        `${process.env.api_url}products/variants?type_2=Cor&id=${variant.id}`
       );
       var variant_json = await variant_res.json();
 
@@ -57,12 +79,15 @@ export async function getStaticProps() {
     i += 1;
   }
 
-  return {
-    props: {
-      products: products_json.Products,
-    },
-    revalidate: 60,
-  };
+  return products_json;
+}
+
+async function getFeatures() {
+  const DOC = firestore().doc("website/home");
+  const snapshot = await DOC.get();
+  const features = snapshot.data().features;
+
+  return features;
 }
 
 function hasColor(array, color) {

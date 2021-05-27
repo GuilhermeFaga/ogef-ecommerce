@@ -6,7 +6,7 @@ export default async (req, res) => {
   const TOKENS = snapshot.data();
 
   const post_res = await fetch(
-    `https://www.ogef.com.br/web_api/carts?access_token=${TOKENS.access_token}`,
+    `${process.env.api_url}carts?access_token=${TOKENS.access_token}`,
     {
       method: "POST",
       mode: "cors",

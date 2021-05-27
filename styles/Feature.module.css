@@ -1,0 +1,73 @@
+.container {
+  width: 100%;
+  padding-bottom: 8px;
+}
+
+.slider {
+  padding: 4px 4px 4px 4px;
+}
+
+.slider div[class^="slick-slide"] {
+  padding: 4px;
+}
+
+.slider > div > div {
+  display: flex;
+}
+
+.sliderBottom {
+  display: flex;
+  padding: 4px 4px;
+  align-items: center;
+}
+
+.bottom {
+  text-align: center;
+}
+
+.sliderBottom > button {
+  color: black;
+  font-size: 1rem;
+}
+
+.dots {
+  list-style-type: none;
+  display: flex;
+  justify-content: space-evenly;
+  margin: 0 auto;
+}
+
+.dots li[class="slick-active"] button {
+  background-color: black;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  margin: 0 8px;
+  background-color: lightgray;
+  border-radius: 100px;
+}
+
+.feature {
+  position: relative;
+}
+
+.action {
+  position: absolute;
+  z-index: 1;
+  bottom: 50px;
+  /* margin-left: 32px; */
+  text-align: end;
+  right: 32px;
+}
+
+.button {
+  background-color: black !important;
+  border-radius: 1px !important;
+}
+
+.verTodos {
+  color: black !important;
+  text-decoration: underline !important;
+}

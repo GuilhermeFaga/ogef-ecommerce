@@ -4,25 +4,32 @@
 
 .image {
   width: 100%;
-  border-radius: 5px;
+  border-radius: 1px;
 }
 
 .bottom {
   display: flex;
   justify-content: space-between;
+  flex-direction: column;
 }
 
 .price {
-  font-weight: 700;
+  font-weight: 400;
 }
 
 .colorsDiv {
   display: flex;
+  justify-content: center;
+  padding-top: 8px;
+}
+
+.bcolor {
+  border-radius: 100px;
 }
 
 .color {
-  width: 24px;
-  height: 24px;
+  width: 18px;
+  height: 18px;
   border-radius: 100px;
   position: relative;
   margin: 1px;
@@ -32,10 +39,15 @@
 .color::after {
   content: "";
   border: 1px solid;
+  border-color: lightgray;
   border-radius: 100px;
   position: absolute;
   top: -2px;
   left: -2px;
   right: -2px;
   bottom: -2px;
+}
+
+.colorSelected::after {
+  border-color: black;
 }

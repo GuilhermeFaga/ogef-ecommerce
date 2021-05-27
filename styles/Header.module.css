@@ -5,7 +5,7 @@
   width: 100%;
   max-width: 1200px;
   padding: 0 16px;
-  height: 150px;
+  height: 64px;
 }
 
 .logoContainer {
@@ -20,6 +20,12 @@
 
 .button {
   margin-left: 16px;
+}
+
+.icon {
+  height: 100%;
+  width: 100%;
+  color: black;
 }
 
 @media (min-width: 1200px) {

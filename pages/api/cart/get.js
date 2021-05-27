@@ -9,7 +9,7 @@ export default async (req, res) => {
   const TOKENS = snapshot.data();
 
   const cart_res = await fetch(
-    `https://www.ogef.com.br/web_api/carts/${session_id}/complete?access_token=${TOKENS.access_token}`
+    `${process.env.api_url}carts/${session_id}/complete?access_token=${TOKENS.access_token}`
   );
   const cart_json = await cart_res.json();
 
