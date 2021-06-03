@@ -10,6 +10,7 @@
 
 .logoContainer {
   position: absolute;
+  margin-top: 4px;
   left: 50%;
 }
 

@@ -3,9 +3,8 @@ import { useState } from "react";
 import styles from "/styles/Product.module.css";
 
 export default function Product({ product }) {
-  const [image, setImage] = useState(product.ProductImage[0].https);
+  const [image, setImage] = useState(product?.ProductImage?.[0].https);
 
-  console.log(product);
   return (
     <div className={styles.container}>
       <a href={`roupas/${product.id}`}>
@@ -15,7 +14,7 @@ export default function Product({ product }) {
           placeholder={
             <Image
               className={styles.image}
-              src={product.ProductImage[0].thumbs["180"].https}
+              src={product.ProductImage?.[0].thumbs["180"].https}
             />
           }
         />
@@ -25,7 +24,7 @@ export default function Product({ product }) {
         <span className={styles.price}>
           R${product.price.replace(/\..+/, "")}
         </span>
-        {!!product.colors.length && (
+        {!!product?.colors?.length && (
           <Colors setState={setImage} image={image} colors={product.colors} />
         )}
       </div>

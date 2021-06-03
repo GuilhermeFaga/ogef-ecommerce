@@ -5,7 +5,7 @@ import Product from "../catalog/product";
 import { useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
-export default function Feature({ feature, products }) {
+export default function Feature({ feature }) {
   const [slider, setSlider] = useState(null);
 
   const settings = {
@@ -74,7 +74,7 @@ export default function Feature({ feature, products }) {
       </div>
       <div className={styles.bottom}>
         <Slider {...settings} ref={(c) => setSlider(c)}>
-          {products.map((product) => (
+          {feature.products.Products.map((product) => (
             <Product key={product.Product.id} product={product.Product} />
           ))}
         </Slider>

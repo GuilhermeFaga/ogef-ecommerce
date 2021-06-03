@@ -16,7 +16,7 @@ export default function Home({ products, features }) {
 
       <main className={styles.main}>
         {features.map((f) => (
-          <Feature key={f.link} feature={f} products={products} />
+          <Feature key={f.link} feature={f} />
         ))}
         <div className={styles.products}>
           <h3>TODOS OS PRODUTOS</h3>
@@ -32,7 +32,7 @@ export default function Home({ products, features }) {
 }
 
 export async function getStaticProps() {
-  const products_json = await getProducts();
+  const products_json = await getAllProducts();
   const features = await getFeatures();
 
   return {
@@ -44,9 +44,47 @@ export async function getStaticProps() {
   };
 }
 
-async function getProducts() {
+async function getAllProducts() {
   const products_res = await fetch(
     `${process.env.api_url}products?available=1`
+  );
+  const products_json = await products_res.json();
+
+  var i = 0;
+  for (const product of products_json.Products) {
+    const product_variants = product.Product.Variant;
+    if (!product_variants.length) continue;
+
+    var colors = [];
+    for (const variant of product_variants) {
+      const variant_res = await fetch(
+        `${process.env.api_url}products/variants?type_2=Cor&id=${variant.id}`
+      );
+      var variant_json = await variant_res.json();
+
+      if (!variant_json.Variants.length) continue;
+
+      variant_json = variant_json.Variants[0].Variant;
+
+      const color = getColor(variant_json.Sku[1].value);
+      const image = variant_json.VariantImage[0].https;
+
+      if (!hasColor(colors, color))
+        colors.push({
+          color: color,
+          image: image,
+        });
+    }
+    products_json.Products[i].Product.colors = colors;
+    i += 1;
+  }
+
+  return products_json;
+}
+
+async function getProductsByCategoryId(category_id) {
+  const products_res = await fetch(
+    `${process.env.api_url}products?available=1&category_id=${category_id}`
   );
   const products_json = await products_res.json();
 
@@ -86,6 +124,12 @@ async function getFeatures() {
   const DOC = firestore().doc("website/home");
   const snapshot = await DOC.get();
   const features = snapshot.data().features;
+
+  for (let i = 0; i < features.length; i++) {
+    const feature = features[i];
+    let products = await getProductsByCategoryId(feature.category_id);
+    feature.products = products;
+  }
 
   return features;
 }
